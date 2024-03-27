@@ -11,6 +11,7 @@ import ru.practicum.stat.dto.StatDto;
 import ru.practicum.stat.model.Stat;
 import ru.practicum.stat.server.EndpointHitService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class EndpointHitController {
     private EndpointHitService service;
 
     @PostMapping("/hit")
-    public void addHit(@RequestBody EndpointHitDto endpointHitDto) {
+    public void addHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
         service.addEndpointHit(endpointHitDto);
     }
 

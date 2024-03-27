@@ -14,5 +14,5 @@ public class Stat {
     private String start;
     private String end;
     private String[] uris;
-    private boolean unique;
+    private boolean unique = false;
 }

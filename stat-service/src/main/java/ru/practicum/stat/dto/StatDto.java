@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 public class StatDto {
     private String app;
     private String uri;
-    private boolean unique;
     private int hits;
 }
