@@ -14,7 +14,6 @@ public class HitMapper {
                 .parse(endpointHitDto.getTimestamp()));
 
         return EndpointHit.builder()
-                .id(null)
                 .app(endpointHitDto.getApp())
                 .uri(endpointHitDto.getUri())
                 .ip(endpointHitDto.getIp())

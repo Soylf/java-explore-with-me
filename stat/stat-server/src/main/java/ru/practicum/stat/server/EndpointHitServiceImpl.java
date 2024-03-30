@@ -6,6 +6,7 @@ import ru.practicum.stat.dto.EndpointHitDto;
 import ru.practicum.stat.dto.StatDto;
 import ru.practicum.stat.error.exception.NoValidParameter;
 import ru.practicum.stat.mapper.HitMapper;
+import ru.practicum.stat.model.EndpointHit;
 import ru.practicum.stat.repository.EndpointHitRepository;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,8 @@ public class EndpointHitServiceImpl implements EndpointHitService {
 
     @Override
     public void addEndpointHit(EndpointHitDto endpointHitDto) {
-        repository.save(mapper.fromEndpointHit(endpointHitDto)); // Сохранение данных о запросе после их преобразования
+        EndpointHit hit = mapper.fromEndpointHit(endpointHitDto);
+        repository.save(hit); // Сохранение данных о запросе после их преобразования
     }
 
     @Override

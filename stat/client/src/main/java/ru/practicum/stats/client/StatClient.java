@@ -15,7 +15,7 @@ import java.util.Map;
 public class StatClient {
     private final RestTemplate rest;
 
-    @Value("${stats-server.url}")
+    @Value("${stat-server.url}")
     private String serverUrl;
 
     public ResponseEntity<Object> saveHit(HitDto hitDto) {
