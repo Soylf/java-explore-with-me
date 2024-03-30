@@ -4,8 +4,6 @@ package ru.practicum.stat.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,17 +15,16 @@ import java.time.LocalDateTime;
 public class EndpointHit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @NotBlank
+    private Long id;
     @Column(name = "app")
+    @NonNull
     private String app;
-    @NotBlank
+    @NonNull
     @Column(name = "uri")
     private String uri;
-    @NotBlank
+    @NonNull
     @Column(name = "ip")
     private String ip;
-    @NotNull
-    @Column(name = "timestamp")
+    @Column(name = "date")
     private LocalDateTime timestamp;
 }
