@@ -25,7 +25,7 @@ public interface EndpointHitRepository extends JpaRepository<EndpointHit, Long> 
                 "order by count(e.ip) desc")
         List<StatDto> findAllNotUnique(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("uris") List<String> uris);
 
-        @Query("select new ru.practicum.statsdto.StatDto(e.app, e.uri, count(e.ip)) " +
+        @Query("select new ru.practicum.statsdto.StatDto(e.app, e.uri, count(distinct e.ip)) " +
                 "from EndpointHit e " +
                 "where e.timestamp between :start and :end " +
                 "and e.uri in (:uris) " +
