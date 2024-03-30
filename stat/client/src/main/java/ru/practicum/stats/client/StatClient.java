@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.statsdto.HitDto;
+import ru.practicum.statsdto.EndpointHitDto;
+
 
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class StatClient {
     @Value("${stat-server.url}")
     private String serverUrl;
 
-    public ResponseEntity<Object> saveHit(HitDto hitDto) {
+    public ResponseEntity<Object> saveHit(EndpointHitDto hitDto) {
         return rest.postForEntity(serverUrl.concat("/hit"),
                 hitDto,
                 Object.class);

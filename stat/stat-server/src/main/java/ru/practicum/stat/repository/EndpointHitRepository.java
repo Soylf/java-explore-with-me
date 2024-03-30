@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EndpointHitRepository extends JpaRepository<EndpointHit, Long> {
-
-        @Query("select new ru.practicum.stat.dto.StatDto(e.app, e.uri, count(e.ip)) " +
+        @Query("select new ru.practicum.statsdto.StatDto(e.app, e.uri, count(e.ip)) " +
                 "from EndpointHit e " +
                 "where e.timestamp between :start and :end " +
                 "group by e.app, e.uri " +
                 "order by count(e.ip) desc")
         List<StatDto> findAllWithoutUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-        @Query("select new ru.practicum.stat.dto.StatDto(e.app, e.uri, count(e.ip)) " +
+        @Query("select new ru.practicum.statsdto.StatDto(e.app, e.uri, count(e.ip)) " +
                 "from EndpointHit e " +
                 "where e.timestamp between :start and :end " +
                 "and e.uri in (:uris) " +
@@ -26,7 +25,7 @@ public interface EndpointHitRepository extends JpaRepository<EndpointHit, Long> 
                 "order by count(e.ip) desc")
         List<StatDto> findAllNotUnique(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("uris") List<String> uris);
 
-        @Query("select new ru.practicum.stat.dto.StatDto(e.app, e.uri, count(distinct e.ip)) " +
+        @Query("select new ru.practicum.statsdto.StatDto(e.app, e.uri, count(e.ip)) " +
                 "from EndpointHit e " +
                 "where e.timestamp between :start and :end " +
                 "and e.uri in (:uris) " +
