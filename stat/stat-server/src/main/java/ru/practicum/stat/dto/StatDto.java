@@ -5,12 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatDto {
+    @NotBlank
     private String app;
+    @NotBlank
     private String uri;
-    private Long hits;
+    @PositiveOrZero
+    private long hits;
 }

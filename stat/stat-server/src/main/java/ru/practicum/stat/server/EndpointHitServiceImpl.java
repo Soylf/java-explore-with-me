@@ -4,16 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.stat.dto.EndpointHitDto;
 import ru.practicum.stat.dto.StatDto;
+import ru.practicum.stat.error.NoValidParameter;
 import ru.practicum.stat.mapper.HitMapper;
 import ru.practicum.stat.repository.EndpointHitRepository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class EndpointHitServiceImpl implements EndpointHitService {
     private final EndpointHitRepository repository;
     private final HitMapper mapper;
@@ -38,7 +37,7 @@ public class EndpointHitServiceImpl implements EndpointHitService {
 
     private void checkEndIsAfterStart(LocalDateTime start, LocalDateTime end) { // Метод проверки корректности даты окончания
         if (!end.isAfter(start)) {
-            throw new RuntimeException("Date should be valid!");
+            throw new NoValidParameter("Что пошло не так");
         }
     }
 }
