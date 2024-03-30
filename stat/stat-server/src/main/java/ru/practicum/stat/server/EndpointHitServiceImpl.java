@@ -2,12 +2,12 @@ package ru.practicum.stat.server;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.stat.dto.EndpointHitDto;
-import ru.practicum.stat.dto.StatDto;
 import ru.practicum.stat.error.exception.NoValidParameter;
 import ru.practicum.stat.mapper.HitMapper;
 import ru.practicum.stat.model.EndpointHit;
 import ru.practicum.stat.repository.EndpointHitRepository;
+import ru.practicum.statsdto.EndpointHitDto;
+import ru.practicum.statsdto.StatDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

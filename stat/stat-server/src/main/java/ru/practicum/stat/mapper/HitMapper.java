@@ -1,8 +1,8 @@
 package ru.practicum.stat.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.stat.dto.EndpointHitDto;
 import ru.practicum.stat.model.EndpointHit;
+import ru.practicum.statsdto.EndpointHitDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

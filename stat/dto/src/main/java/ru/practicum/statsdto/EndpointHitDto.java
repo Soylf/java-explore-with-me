@@ -1,5 +1,4 @@
-package ru.practicum.stats.model;
-
+package ru.practicum.statsdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HitDto {
+public class EndpointHitDto {
     private String app;
     private String uri;
     private String ip;
