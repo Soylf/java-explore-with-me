@@ -13,7 +13,7 @@
     <artifactId>stat-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>server</module>
+        <module>stat-server</module>
         <module>client</module>
     </modules>
 
