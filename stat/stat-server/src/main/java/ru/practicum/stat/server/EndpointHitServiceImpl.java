@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.stat.dto.EndpointHitDto;
 import ru.practicum.stat.dto.StatDto;
-import ru.practicum.stat.error.NoValidParameter;
+import ru.practicum.stat.error.exception.NoValidParameter;
 import ru.practicum.stat.mapper.HitMapper;
 import ru.practicum.stat.repository.EndpointHitRepository;
 
