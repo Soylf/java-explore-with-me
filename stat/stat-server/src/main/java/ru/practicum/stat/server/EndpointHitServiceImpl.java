@@ -27,12 +27,12 @@ public class EndpointHitServiceImpl implements EndpointHitService {
         checkEndIsAfterStart(start, end);
 
         if (uris == null || uris.isEmpty()) {
-            return repository.findStatDtoByTimestampBetween(start, end); // Получение статистики без учета URI
+            return repository.findAllWithoutUris(start, end); // Получение статистики без учета URI
         }
         if (unique) {
-            return repository.findStatDtoByTimestampBetweenAndUriIn(start, end, uris); // Получение уникальной статистики по запросам с учетом URI
+            return repository.findAllUnique(start, end, uris); // Получение уникальной статистики по запросам с учетом URI
         }
-        return repository.findStatDtoByTimestampBetweenAndUriInAndIpIsNotNull(start, end, uris); // Получение статистики по запросам без учета уникальности и с указанными URI
+        return repository.findAllNotUnique(start, end, uris); // Получение статистики по запросам без учета уникальности и с указанными URI
     }
 
     private void checkEndIsAfterStart(LocalDateTime start, LocalDateTime end) { // Метод проверки корректности даты окончания

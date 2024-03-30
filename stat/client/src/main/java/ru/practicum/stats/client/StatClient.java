@@ -18,13 +18,13 @@ public class StatClient {
     @Value("${stats-server.url}")
     private String serverUrl;
 
-    public ResponseEntity<Object> addHit(HitDto hitDto) {
+    public ResponseEntity<Object> saveHit(HitDto hitDto) {
         return rest.postForEntity(serverUrl.concat("/hit"),
                 hitDto,
                 Object.class);
     }
 
-    public ResponseEntity<Object> getStats(String start, String end, List<String> uris, Boolean unique) {
+    public ResponseEntity<Object> getStatistics(String start, String end, List<String> uris, Boolean unique) {
         Map<String, Object> parameters = Map.of(
                 "start", start,
                 "end", end,
