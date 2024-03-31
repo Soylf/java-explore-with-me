@@ -1,23 +1,19 @@
 package ru.practicum.stat.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Builder;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.factory.Mappers;
 import ru.practicum.stat.model.EndpointHit;
 import ru.practicum.statsdto.EndpointHitDto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        builder = @Builder(disableBuilder = true))
+public interface HitMapper {
+    HitMapper INSTANCE = Mappers.getMapper(HitMapper.class);
 
-@Component
-public class HitMapper {
-    public EndpointHit fromEndpointHit(EndpointHitDto endpointHitDto) {
-        LocalDateTime dateTime = LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .parse(endpointHitDto.getTimestamp()));
-
-        return EndpointHit.builder()
-                .app(endpointHitDto.getApp())
-                .uri(endpointHitDto.getUri())
-                .ip(endpointHitDto.getIp())
-                .timestamp(dateTime)
-                .build();
-    }
+    @Mapping(target = "timestamp", source = "timestamp", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    EndpointHit fromEndpointHitDto(EndpointHitDto endpointHitDto);
 }
