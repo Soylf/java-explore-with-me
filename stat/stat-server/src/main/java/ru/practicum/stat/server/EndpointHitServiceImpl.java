@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.stat.error.exception.NoValidParameter;
 import ru.practicum.stat.mapper.HitMapper;
+import ru.practicum.stat.model.EndpointHit;
 import ru.practicum.stat.repository.EndpointHitRepository;
 import ru.practicum.statsdto.EndpointHitDto;
 import ru.practicum.statsdto.StatDto;
@@ -15,10 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EndpointHitServiceImpl implements EndpointHitService {
     private final EndpointHitRepository repository;
+    private final HitMapper mapper;
 
     @Override
     public void addEndpointHit(EndpointHitDto endpointHitDto) {
-        repository.save(HitMapper.INSTANCE.fromEndpointHitDto(endpointHitDto)); // Сохранение данных о запросе после их преобразования
+        EndpointHit hit = mapper.fromEndpointHit(endpointHitDto);
+        repository.save(hit); // Сохранение данных о запросе после их преобразования
     }
 
     @Override
