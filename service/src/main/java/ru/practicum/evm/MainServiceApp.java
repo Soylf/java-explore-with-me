@@ -1,4 +1,4 @@
-package ru.practicum.main;
+package ru.practicum.evm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
