@@ -1,4 +1,4 @@
-package ru.practicum.evm.admin.controller;
+package ru.practicum.evm.api.admins.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

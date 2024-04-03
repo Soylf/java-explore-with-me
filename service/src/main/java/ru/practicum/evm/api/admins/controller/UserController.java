@@ -1,4 +1,4 @@
-package ru.practicum.evm.admin.controller;
+package ru.practicum.evm.api.admins.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/admin/categories")
+@RequestMapping("/admin/users")
 @RequiredArgsConstructor
-public class CategoriesController {
+public class UserController {
 }
