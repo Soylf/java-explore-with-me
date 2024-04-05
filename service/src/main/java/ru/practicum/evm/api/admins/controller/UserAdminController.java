@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/admin/compilations")
+@RequestMapping("/admin/users")
 @RequiredArgsConstructor
-public class CompilationsController {
+public class UserAdminController {
 }

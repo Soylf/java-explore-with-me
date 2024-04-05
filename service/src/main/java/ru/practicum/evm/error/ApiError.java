@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Data
 @AllArgsConstructor
-public class ApIError {
+public class ApiError {
     private String message;
     private Map<String, Object> errors;
     private String reason;
