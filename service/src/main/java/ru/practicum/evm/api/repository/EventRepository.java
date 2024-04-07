@@ -9,6 +9,7 @@ import ru.practicum.evm.model.state.EventState;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface EventRepository extends JpaRepository<Event,Long> {
     Optional<Event> findByIdAndInitiatorId(Long eventId, Long userId);
@@ -21,4 +22,6 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
 
     Optional<Event> findByIdAndState(Long eventId, EventState published);
+
+    List<Event> findAllByIdIn(Set<Long> events);
 }
