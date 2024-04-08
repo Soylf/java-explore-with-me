@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>stat-service</artifactId>
+    <artifactId>stat</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>stat-server</module>
