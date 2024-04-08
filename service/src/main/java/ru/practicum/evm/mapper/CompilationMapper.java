@@ -21,7 +21,13 @@ public interface CompilationMapper {
                 .build();
     }
 
-    Compilation fromNewDto(CompilationNewDto dto);
+    default Compilation fromNewDto(CompilationNewDto dto) {
+        return Compilation.builder()
+                .pinned(dto.getPinned())
+                .title(dto.getTitle())
+                .events(List.of())
+                .build();
+    }
 
     List<CompilationDto> toDtoList(List<Compilation> compilations);
 }
