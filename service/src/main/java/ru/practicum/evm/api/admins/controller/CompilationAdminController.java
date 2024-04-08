@@ -20,17 +20,20 @@ public class CompilationAdminController {
 
     @PostMapping
     public CompilationDto createCompilation(@RequestBody @Valid CompilationNewDto request) {
+        log.info("CompilationAdminController: запрос на создания Compilation");
         return service.createCompilation(request);
     }
 
     @PatchMapping("/{compId}")
     public CompilationDto updateCompilation(@PathVariable(name = "compId") @Positive Long compilationId,
                                             @RequestBody @Valid CompilationUpdateRequest request) {
+        log.info("CompilationAdminController: запрос на обновления Compilation");
         return service.updateCompilationById(compilationId, request);
     }
 
     @DeleteMapping("/{compId}")
     public void deleteCompilation(@PathVariable(name = "compId") @Positive Long compilationId) {
+        log.info("CompilationAdminController: запрос на удаления Compilation");
         service.deleteCompilationById(compilationId);
     }
 }

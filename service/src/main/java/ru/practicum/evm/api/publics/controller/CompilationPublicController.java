@@ -21,11 +21,13 @@ public class CompilationPublicController {
     public List<CompilationDto> getComplications(@RequestParam(required = false) Boolean pinned,
                                                  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                                  @RequestParam(defaultValue = "10") @Positive Integer size) {
-        return service.getComplications(pinned,from,size);
+        log.info("CompilationPublicController: запрос на получение списка из Complications");
+        return service.getCompilations(pinned, from, size);
     }
 
     @GetMapping("/{compId}")
     public CompilationDto getCompilation(@PathVariable(name = "compId") @Positive Long compilationId) {
+        log.info("CompilationPublicController: запрос на получение Complications");
         return service.getCompilation(compilationId);
     }
 }

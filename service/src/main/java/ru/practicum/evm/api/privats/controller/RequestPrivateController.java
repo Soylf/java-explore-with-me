@@ -17,20 +17,21 @@ public class RequestPrivateController {
 
     @PostMapping("/{userId}/requests")
     public RequestDto addRequest(@PathVariable Long userId,
-                                    @RequestParam Long eventId) {
+                                 @RequestParam Long eventId) {
+        log.info("RequestPrivateController: запрос на создания RequestDto");
         return service.addRequest(userId, eventId);
     }
 
     @GetMapping("/{userId}/requests")
     public List<RequestDto> getAllRequests(@PathVariable(name = "userId") Long userId) {
-
+        log.info("RequestPrivateController: запрос на получения списка RequestDto");
         return service.getAllRequests(userId);
     }
 
     @PatchMapping("/{userId}/requests/{requestId}/cancel")
     public RequestDto updateRequest(@PathVariable(name = "userId") Long userId,
-                                       @PathVariable(name = "requestId") Long requestId) {
+                                    @PathVariable(name = "requestId") Long requestId) {
+        log.info("RequestPrivateController: запрос на обновления события");
         return service.updateRequest(userId, requestId);
     }
-
 }

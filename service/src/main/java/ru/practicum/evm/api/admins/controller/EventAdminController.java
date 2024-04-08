@@ -31,14 +31,14 @@ public class EventAdminController {
                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate,
                                         @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                         @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
-
+        log.info("EventAdminController: запрос на получения события (EventFullDto)");
         return service.getAllEvents(users, states, categories, startDate, endDate, from, size);
     }
 
     @PatchMapping("/{eventId}")
     public EventFullDto updateEvent(@PathVariable(name = "eventId") Long eventId,
                                     @RequestBody @Valid EventUpdateAdminRequest request) {
-
+        log.info("EventAdminController: запрос на обновления события");
         return service.updateEventById(eventId, request);
     }
 

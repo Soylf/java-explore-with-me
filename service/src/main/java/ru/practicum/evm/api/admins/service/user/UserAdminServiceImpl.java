@@ -40,6 +40,7 @@ public class UserAdminServiceImpl implements UserAdminService {
         repository.deleteById(userId);
     }
 
+    //Дополнительные методы
     public void checkUser(Long userId) {
         repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id= '%s' не найден", userId)));

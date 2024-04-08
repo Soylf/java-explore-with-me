@@ -19,20 +19,27 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     private final CompilationRepository repository;
 
     @Override
-    public List<CompilationDto> getComplications(Boolean pinned, Integer from, Integer size) {
+    public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
 
+        // Получение страницы подборок с учетом закрепленности
         Page<Compilation> compilationPage = repository.findAllByPinned(pinned, pageable);
         return CompilationMapper.MAPPER.toDtoList(compilationPage.getContent());
     }
 
     @Override
     public CompilationDto getCompilation(Long compilationId) {
-        return CompilationMapper.MAPPER.toDto(checkCompilation(compilationId));
+        return CompilationMapper.MAPPER.toDto(getCompilationById(compilationId));
 
     }
 
-    private Compilation checkCompilation(Long compilationId) {
+    //Дополнительыне методы
+    private void checkCompilation(Long compilationId) {
+        repository.findById(compilationId)
+                .orElseThrow(() -> new NotFoundException(String.format("Что то пошло не так с этим id: '%s' не найдена", compilationId)));
+    }
+
+    private Compilation getCompilationById(Long compilationId) {
         return repository.findById(compilationId)
                 .orElseThrow(() -> new NotFoundException(String.format("Что то пошло не так с этим id: '%s' не найдена", compilationId)));
     }

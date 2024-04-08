@@ -29,7 +29,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EventPrivateServiceImpl implements EventPrivateService {
+
+    // Константа, определяющая количество часов до начала события
     private static final int HOURS_BEFORE_START_EVENT = 2;
+
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
@@ -50,18 +53,19 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         checkEvent(eventId);
         checkUser(userId);
 
-        Event updateEvent = getEvent(eventId,userId);
+        Event updateEvent = getEvent(eventId, userId);
 
+        // Обновление информации о событии
         if (request.getTitle() != null && !request.getTitle().isBlank()) {
             updateEvent.setTitle(request.getTitle());
         }
-        if (request.getEventDate() != null ) {
+        if (request.getEventDate() != null) {
             updateEvent.setEventDate(request.getEventDate());
         }
         if (StringUtils.hasLength(request.getAnnotation())) {
             updateEvent.setAnnotation(request.getAnnotation());
         }
-        if (request.getCategory() != null ) {
+        if (request.getCategory() != null) {
             Category category = getCategory(request.getCategory());
             updateEvent.setCategory(category);
         }
@@ -88,6 +92,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             }
         }
 
+        // Сохранение обновленного события
         return EventMapper.MAPPER.toEventFullDto(eventRepository.save(updateEvent));
     }
 
@@ -110,7 +115,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         return EventMapper.MAPPER.toEventFullDto(event);
     }
 
-    //
+    //Дополнительные методы
     private void checkUser(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("Что-то пошло не так с id: '%s' не найдена", userId)));
@@ -121,6 +126,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                 .orElseThrow(() -> new NotFoundException(String.format("Что-то пошло не так с id: '%s' не найдена", eventId)));
     }
 
+    // Приватный метод для проверки времени до начала события
     private void checkTimeBeforeEventStart(LocalDateTime startDate) {
         LocalDateTime munTimePeriod = LocalDateTime.now().plusHours(HOURS_BEFORE_START_EVENT);
         if (startDate.isBefore(munTimePeriod)) {

@@ -23,6 +23,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class EventsPublicServiceImpl implements EventsPublicService {
+
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
 
@@ -36,7 +37,8 @@ public class EventsPublicServiceImpl implements EventsPublicService {
         Pageable pageable = PageRequest.of(from / size, size);
         Specification<Event> specification = Specification.where(null);
 
-        if(text != null) {
+        // Фильтрация по тексту в аннотации или описании
+        if (text != null) {
             specification = specification.and((root, query, criteriaBuilder) -> criteriaBuilder.or(
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("annotation")),
                             "%" + text.toLowerCase() + "%"),
@@ -44,41 +46,48 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                             "%" + text.toLowerCase() + "%")
             ));
         }
+
+        // Фильтрация по категориям
         if (!categories.isEmpty()) {
             specification = specification.and((root, query, criteriaBuilder) ->
                     root.get("category").get("id").in(categories));
         }
-        LocalDateTime startDateTime = Objects.requireNonNullElse(startDate, LocalDateTime.now());
 
+        // Фильтрация по дате начала события
+        LocalDateTime startDateTime = Objects.requireNonNullElse(startDate, LocalDateTime.now());
         specification = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThan(root.get("eventDate"), startDateTime));
 
+        // Фильтрация по дате окончания события
         if (endDate != null) {
             specification = specification.and((root, query, criteriaBuilder) ->
                     criteriaBuilder.lessThan(root.get("eventDate"), endDate));
         }
-
+        // Фильтрация по доступности
         if (onlyAvailable) {
             specification = specification.and((root, query, criteriaBuilder) ->
                     criteriaBuilder.greaterThanOrEqualTo(root.get("participantLimit"), 0));
         }
+
+        // Фильтрация по состоянию (опубликованные события)
         specification = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("state"), EventState.PUBLISHED));
+
         Page<Event> events = eventRepository.findAll(specification, pageable);
-
-
         return EventMapper.MAPPER.toEventShortDtoList(events.getContent());
     }
 
     @Override
     public EventFullDto getEventById(Long eventId) {
+        // Поиск события по ID и его состоянию (опубликованное событие)
         Event event = eventRepository.findByIdAndState(eventId, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException("Event not found"));
 
+        // Возврат полной информации о событии в виде DTO
         return EventMapper.MAPPER.toEventFullDto(event);
     }
 
-
+    // Дополнительные методы
     private void checkTime(LocalDateTime startDate, LocalDateTime endDate) {
         if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
             throw new BadRequestException("Start date can not after end date");
@@ -88,7 +97,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
     private void checkCategory(List<Long> categories) {
         for (Long id : categories) {
             categoryRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException(String.format("Что-то пошло не так с id: '%s' не найдена", id)));
+                    .orElseThrow(() -> new NotFoundException(String.format("Category with id: '%s' not found", id)));
         }
     }
 }

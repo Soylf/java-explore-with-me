@@ -1,8 +1,10 @@
 package ru.practicum.evm.model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import ru.practicum.evm.model.state.RequestStatus;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import ru.practicum.evm.model.state.RequestStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

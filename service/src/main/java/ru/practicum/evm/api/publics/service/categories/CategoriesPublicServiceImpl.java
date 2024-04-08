@@ -29,6 +29,7 @@ public class CategoriesPublicServiceImpl implements CategoriesPublicService {
         return CategoryMapper.MAPPER.toDto(category);
     }
 
+    //Дополнительные методы
     private Category getCategory(Long categoryId) {
         return repository.findById(categoryId).orElseThrow(() ->
                 new NotFoundException(String.format("Категория с id='%s' не найдена", categoryId)));

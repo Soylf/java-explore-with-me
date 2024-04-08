@@ -25,9 +25,11 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     public CompilationDto createCompilation(CompilationNewDto request) {
         Compilation compilation = CompilationMapper.MAPPER.fromNewDto(request);
 
+        // Установка значения поля 'pinned' в false, если оно не указано в запросе
         if (request.getPinned() != null) {
             compilation.setPinned(false);
         }
+        // Установка событий для подборки, если они указаны в запросе
         if (request.getEvents() != null) {
             compilation.setEvents(getEvents(request.getEvents()));
         }
@@ -39,12 +41,15 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     public CompilationDto updateCompilationById(Long compilationId, CompilationUpdateRequest request) {
         Compilation compilation = getCompilation(compilationId);
 
+        // Установка событий для подборки, если они указаны в запросе
         if (request.getEvents() != null) {
             compilation.setEvents(getEvents(request.getEvents()));
         }
+        // Установка значения поля 'pinned' в false, если оно указано в запросе
         if (request.getPinned() != null) {
             compilation.setPinned(false);
         }
+        // Установка нового заголовка подборки, если он указан в запросе
         if (request.getTitle() != null) {
             compilation.setTitle(request.getTitle());
         }
@@ -54,10 +59,12 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
 
     @Override
     public void deleteCompilationById(Long compilationId) {
+        // Проверка существования подборки перед удалением
         checkCompilation(compilationId);
         compilationRepository.deleteById(compilationId);
     }
 
+    //Дополнительыне методы
     private List<Event> getEvents(Set<Long> events) {
         return eventRepository.findAllByIdIn(events);
     }

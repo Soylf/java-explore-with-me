@@ -7,7 +7,6 @@ import ru.practicum.evm.api.admins.service.categories.CategoriesAdminService;
 import ru.practicum.evm.dto.category.CategoryDto;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Slf4j
 @RestController
@@ -18,17 +17,20 @@ public class CategoriesAdminController {
 
     @PostMapping
     public CategoryDto addCategories(@Valid @RequestBody CategoryDto categoryDto) {
+        log.info("CategoriesAdminController: запрос на создания категории (CategoryDto)");
         return service.addCategories(categoryDto);
     }
 
     @DeleteMapping("/{catId}")
     public boolean deleteCategories(@PathVariable Long catId) {
+        log.info("CategoriesAdminController: запрос на удалении категории (CategoryDto)");
         return service.deleteCategories(catId);
     }
 
     @PostMapping("/{catId}")
     public CategoryDto updateCategories(@Valid @RequestBody CategoryDto categoryDto,
                                         @PathVariable Long catId) {
-        return service.updateCategories(categoryDto,catId);
+        log.info("CategoriesAdminController: запрос на обновления категории (CategoryDto)");
+        return service.updateCategories(categoryDto, catId);
     }
 }

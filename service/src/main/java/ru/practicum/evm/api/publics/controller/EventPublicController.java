@@ -32,12 +32,14 @@ public class EventPublicController {
                                          @RequestParam(name = "sort", defaultValue = "event_date") String sort,
                                          @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                          @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
+        log.error("EventPublicController: запрос на получение списка событий");
         return service.getAllEvents(text, categories, paid, startDate,
                 endDate, onlyAvailable, sort, from, size);
     }
 
     @GetMapping("/{eventId}")
     public EventFullDto getEvent(@PathVariable(name = "eventId") @Positive Long eventId) {
+        log.info("EventPublicController: запрос на поулчение события");
         return service.getEventById(eventId);
     }
 }
