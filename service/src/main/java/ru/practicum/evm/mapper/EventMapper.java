@@ -1,13 +1,11 @@
 package ru.practicum.evm.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.practicum.evm.dto.event.EventFullDto;
 import ru.practicum.evm.dto.event.EventNewDto;
 import ru.practicum.evm.dto.event.EventShortDto;
 import ru.practicum.evm.model.Category;
-
 import ru.practicum.evm.model.Event;
 import ru.practicum.evm.model.Location;
 import ru.practicum.evm.model.User;
@@ -21,7 +19,7 @@ public interface EventMapper {
     EventMapper MAPPER = Mappers.getMapper(EventMapper.class);
 
 
-     default Event toEvent(EventNewDto eventNewDto, Category category, User initiator) {
+    default Event toEvent(EventNewDto eventNewDto, Category category, User initiator) {
         return Event.builder()
                 .annotation(eventNewDto.getAnnotation())
                 .category(category)
@@ -43,8 +41,6 @@ public interface EventMapper {
                 .views(0)
                 .build();
     }
-
-    EventShortDto toEventShortDto(Event event);
 
     EventFullDto toEventFullDto(Event event);
 

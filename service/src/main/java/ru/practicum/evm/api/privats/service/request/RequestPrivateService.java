@@ -10,6 +10,7 @@ public interface RequestPrivateService {
     EventRequestStatusUpdateResult updateStatusRequest(Long userId, Long eventId, EventRequestStatusUpdateRequest request);
 
     List<RequestDto> getRequestByEvent(Long userId, Long eventId);
+
     RequestDto addRequest(Long userId, Long eventId);
 
     List<RequestDto> getAllRequests(Long userId);
