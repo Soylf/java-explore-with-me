@@ -54,8 +54,8 @@ services:
       - "5433:5433"
     environment:
       - POSTGRES_DB=ewm-main
-      - POSTGRES_USER=password
-      - POSTGRES_PASSWORD=sa
+      - POSTGRES_USER=sa
+      - POSTGRES_PASSWORD=password
 
 volumes:
   stats-data:
