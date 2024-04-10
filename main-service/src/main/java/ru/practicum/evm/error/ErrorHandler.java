@@ -10,29 +10,40 @@ import ru.practicum.evm.error.exception.ConflictException;
 import ru.practicum.evm.error.exception.NotFoundException;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ApiError> handleConflictException(ConflictException ex) {
-        return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage(), "Conflict occurred", ex);
+        ApiError response = ApiError.builder()
+                .status(HttpStatus.CONFLICT.name())
+                .reason("Request is incorrect.")
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiError> handleBadRequestException(BadRequestException ex) {
-        return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage(), "Bad Request", ex);
+        ApiError response = ApiError.builder()
+                .status(HttpStatus.BAD_REQUEST.name())
+                .reason("Request is incorrect.")
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex) {
-        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage(), "Not Found", ex);
-    }
-
-    private ResponseEntity<ApiError> buildResponseEntity(HttpStatus status, String message, String reason, Exception ex) {
-        ApiError apiError = new ApiError(message, new HashMap<>(), reason, status.toString(), LocalDateTime.now());
-        log.error("Exception occurred: {}", ex.getMessage(), ex);
-        return new ResponseEntity<>(apiError, status);
+        ApiError response = ApiError.builder()
+                .status(HttpStatus.NOT_FOUND.name())
+                .reason("Request is incorrect.")
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
