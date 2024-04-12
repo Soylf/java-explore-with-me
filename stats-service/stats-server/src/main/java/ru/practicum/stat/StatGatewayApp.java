@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StatGateway {
+public class StatGatewayApp {
     public static void main(String[] args) {
-        SpringApplication.run(StatGateway.class, args);
+        SpringApplication.run(StatGatewayApp.class, args);
     }
 }
