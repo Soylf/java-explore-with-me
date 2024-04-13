@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.main.dto.category.CategoryDto;
-import ru.practicum.main.dto.comment.CommentDto;
 import ru.practicum.main.dto.user.UserShortDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -33,6 +31,4 @@ public class EventShortDto {
     private String title;
 
     private Integer views;
-
-    private List<CommentDto> comments;
 }
