@@ -15,21 +15,14 @@ import ru.practicum.main.error.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.state.EventState;
-import ru.practicum.stats.client.StatClient;
-import ru.practicum.statsdto.EndpointHitDto;
-import ru.practicum.statsdto.StatDto;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EventsPublicServiceImpl implements EventsPublicService {
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final StatClient statClient;
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
 
@@ -37,10 +30,9 @@ public class EventsPublicServiceImpl implements EventsPublicService {
     public List<EventShortDto> getAllEvents(String text, List<Long> categories, Boolean paid,
                                             LocalDateTime startDate, LocalDateTime endDate,
                                             Boolean onlyAvailable, String sort,
-                                            Integer from, Integer size, String ip, String uri) {
+                                            Integer from, Integer size) {
         checkTime(startDate, endDate);
         checkCategory(categories);
-        saveInfoToStatistics(ip, uri);
 
         Pageable pageable = PageRequest.of(from / size, size);
         Specification<Event> specification = Specification.where(null);
@@ -84,19 +76,15 @@ public class EventsPublicServiceImpl implements EventsPublicService {
         Page<Event> eventPage = eventRepository.findAll(specification, pageable);
         List<Event> events = eventPage.getContent();
 
-        updateViewsOfEvents(events);
 
         return EventMapper.MAPPER.toEventShortDtoList(events);
     }
 
     @Override
-    public EventFullDto getEventById(Long eventId, String ip, String uri) {
+    public EventFullDto getEventById(Long eventId) {
         // Поиск события по ID и его состоянию (опубликованное событие)
         Event event = eventRepository.findByIdAndState(eventId, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException("Event not found"));
-
-        saveInfoToStatistics(ip, uri);
-        updateViewsOfEvents(List.of(event));
 
         // Возврат полной информации о событии в виде DTO
         return EventMapper.MAPPER.toEventFullDto(event);
@@ -114,47 +102,5 @@ public class EventsPublicServiceImpl implements EventsPublicService {
             categoryRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException(String.format("Category with id: '%s' not found", id)));
         }
-    }
-
-
-    //методы для сохранения и обновления(stat)
-    private void saveInfoToStatistics(String ip, String uri) {
-        statClient.saveHit(EndpointHitDto.builder()
-                .app("ewm-main-service")
-                .uri(uri)
-                .ip(ip)
-                .timestamp(LocalDateTime.now().format(DATE_TIME_FORMATTER))
-                .build());
-    }
-
-    private void updateViewsOfEvents(List<Event> events) {
-        List<String> uris = events.stream()
-                .map(event -> String.format("/events/%s", event.getId()))
-                .collect(Collectors.toList());
-
-        List<StatDto> statistics = getViewsStatistics(uris);
-
-        events.forEach(event -> {
-            StatDto foundViewInStats = statistics.stream()
-                    .filter(statDto -> {
-                        Long eventIdFromStats = Long.parseLong(statDto.getUri().substring("/events/".length()));
-                        return Objects.equals(eventIdFromStats, event.getId());
-                    })
-                    .findFirst()
-                    .orElse(null);
-
-            long currentCountViews = foundViewInStats == null ? 0 : foundViewInStats.getHits();
-            event.setViews((int) currentCountViews + 1);
-        });
-
-        eventRepository.saveAll(events);
-    }
-
-    private List<StatDto> getViewsStatistics(List<String> uris) {
-        return statClient.getStatistics(
-                LocalDateTime.now().minusYears(100).format(DATE_TIME_FORMATTER),
-                LocalDateTime.now().plusYears(5).format(DATE_TIME_FORMATTER),
-                uris,
-                true);
     }
 }

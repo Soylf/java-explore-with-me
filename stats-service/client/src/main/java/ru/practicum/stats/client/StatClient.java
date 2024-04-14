@@ -1,6 +1,5 @@
 package ru.practicum.stats.client;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ public class StatClient {
     private final RestTemplate rest;
 
     @Value("${stats-server.url}")
-    private String serverUrl;
+    private final String serverUrl;
 
     public void saveHit(EndpointHitDto hitDto) {
         rest.postForLocation(serverUrl.concat("/hit"), hitDto);

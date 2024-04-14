@@ -32,7 +32,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     // Константа, определяющая количество часов до начала события
     private static final int HOURS_BEFORE_START_EVENT = 2;
-
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
@@ -44,7 +43,8 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         Category category = getCategory(request.getCategory());
 
         Event event = EventMapper.MAPPER.toEvent(request, category, user);
-        return EventMapper.MAPPER.toEventFullDto(eventRepository.save(event));
+        Event newEvent = eventRepository.save(event);
+        return EventMapper.MAPPER.toEventFullDto(newEvent);
     }
 
     @Override

@@ -24,7 +24,9 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
 
         // Получение страницы подборок с учетом закрепленности
         Page<Compilation> compilationPage = repository.findAllByPinned(pinned, pageable);
-        return CompilationMapper.MAPPER.toDtoList(compilationPage.getContent());
+        List<Compilation> compilations = compilationPage.getContent();
+
+        return CompilationMapper.MAPPER.toDtoList(compilations);
     }
 
     @Override
@@ -34,11 +36,6 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     }
 
     //Дополнительыне методы
-    private void checkCompilation(Long compilationId) {
-        repository.findById(compilationId)
-                .orElseThrow(() -> new NotFoundException(String.format("Что то пошло не так с этим id: '%s' не найдена", compilationId)));
-    }
-
     private Compilation getCompilationById(Long compilationId) {
         return repository.findById(compilationId)
                 .orElseThrow(() -> new NotFoundException(String.format("Что то пошло не так с этим id: '%s' не найдена", compilationId)));

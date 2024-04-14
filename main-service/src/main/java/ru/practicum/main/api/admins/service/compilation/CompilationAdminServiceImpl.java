@@ -33,8 +33,9 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         if (request.getEvents() != null) {
             compilation.setEvents(getEvents(request.getEvents()));
         }
+        Compilation newCompilation = compilationRepository.save(compilation);
 
-        return CompilationMapper.MAPPER.toDto(compilationRepository.save(compilation));
+        return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
     @Override
@@ -53,8 +54,9 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         if (request.getTitle() != null) {
             compilation.setTitle(request.getTitle());
         }
+        Compilation newCompilation = compilationRepository.save(compilation);
 
-        return CompilationMapper.MAPPER.toDto(compilationRepository.save(compilation));
+        return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
     @Override

@@ -1,10 +1,10 @@
-package ru.practicum.stat.controller;
+package ru.practicum.statsserver.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.stat.server.EndpointHitService;
+import ru.practicum.statsserver.server.EndpointHitService;
 import ru.practicum.statsdto.EndpointHitDto;
 import ru.practicum.statsdto.StatDto;
 

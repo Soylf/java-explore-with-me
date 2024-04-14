@@ -18,9 +18,10 @@ public class CategoriesPublicServiceImpl implements CategoriesPublicService {
     private final CategoryRepository repository;
 
     public List<CategoryDto> getCategories(Integer from, Integer size) {
-        Page<Category> categories = repository.findAll(PageRequest.of(from, size));
+        Page<Category> categoriePage = repository.findAll(PageRequest.of(from, size));
+        List<Category> categories = categoriePage.getContent();
 
-        return CategoryMapper.MAPPER.toDtoList(categories.getContent());
+        return CategoryMapper.MAPPER.toDtoList(categories);
     }
 
     public CategoryDto getCategoryById(Long categoryId) {

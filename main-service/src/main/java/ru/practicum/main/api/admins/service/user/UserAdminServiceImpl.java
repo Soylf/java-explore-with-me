@@ -21,16 +21,19 @@ public class UserAdminServiceImpl implements UserAdminService {
     @Override
     public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
         if (Objects.isNull(ids) || ids.isEmpty()) {
-            Page<User> users = repository.findAll(PageRequest.of(from, size));
-            return UserMapper.MAPPER.toUserDosList(users.getContent());
+            Page<User> userPage = repository.findAll(PageRequest.of(from, size));
+            List<User> users = userPage.getContent();
+            return UserMapper.MAPPER.toUserDosList(users);
         }
-        Page<User> users = repository.findAllByIdIn(ids, PageRequest.of(from, size));
-        return UserMapper.MAPPER.toUserDosList(users.getContent());
+        Page<User> userPage = repository.findAllByIdIn(ids, PageRequest.of(from, size));
+        List<User> users = userPage.getContent();
+        return UserMapper.MAPPER.toUserDosList(users);
     }
 
     @Override
     public UserDto addUser(UserDto request) {
-        User saveUser = repository.save(UserMapper.MAPPER.toUser(request));
+        User user = UserMapper.MAPPER.toUser(request);
+        User saveUser = repository.save(user);
         return UserMapper.MAPPER.toUserDto(saveUser);
     }
 

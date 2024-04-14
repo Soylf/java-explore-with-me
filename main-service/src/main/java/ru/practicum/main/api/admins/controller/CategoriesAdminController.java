@@ -23,9 +23,9 @@ public class CategoriesAdminController {
     }
 
     @DeleteMapping("/{catId}")
-    public boolean deleteCategory(@PathVariable(name = "catId") @Positive Long categoryId) {
+    public void deleteCategory(@PathVariable(name = "catId") @Positive Long categoryId) {
         log.info("CategoriesAdminController: запрос на удалении категории (CategoryDto)");
-        return service.deleteCategories(categoryId);
+        service.deleteCategories(categoryId);
     }
 
     @PostMapping("/{catId}")

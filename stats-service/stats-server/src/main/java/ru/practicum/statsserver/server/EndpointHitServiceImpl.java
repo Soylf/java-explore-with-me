@@ -1,11 +1,11 @@
-package ru.practicum.stat.server;
+package ru.practicum.statsserver.server;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.stat.error.exception.NoValidParameter;
-import ru.practicum.stat.mapper.HitMapper;
-import ru.practicum.stat.model.EndpointHit;
-import ru.practicum.stat.repository.EndpointHitRepository;
+import ru.practicum.statsserver.error.exception.NoValidParameter;
+import ru.practicum.statsserver.mapper.HitMapper;
+import ru.practicum.statsserver.model.EndpointHit;
+import ru.practicum.statsserver.repository.EndpointHitRepository;
 import ru.practicum.statsdto.EndpointHitDto;
 import ru.practicum.statsdto.StatDto;
 
