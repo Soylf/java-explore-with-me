@@ -18,6 +18,7 @@ import ru.practicum.main.model.User;
 import ru.practicum.main.model.state.EventState;
 import ru.practicum.main.model.state.RequestStatus;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class RequestPrivateServiceImpl implements RequestPrivateService {
         return RequestMapper.MAPPER.toDtoList(requests);
     }
 
+    @Transactional
     @Override
     public RequestDto addRequest(Long userId, Long eventId) {
         checkEvent(eventId);

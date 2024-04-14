@@ -12,6 +12,7 @@ import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.Compilation;
 import ru.practicum.main.model.Event;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
 
+    @Transactional
     @Override
     public CompilationDto createCompilation(CompilationNewDto request) {
         Compilation compilation = CompilationMapper.MAPPER.fromNewDto(request);
@@ -38,6 +40,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
+    @Transactional
     @Override
     public CompilationDto updateCompilationById(Long compilationId, CompilationUpdateRequest request) {
         Compilation compilation = getCompilation(compilationId);
@@ -59,6 +62,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
+    @Transactional
     @Override
     public void deleteCompilationById(Long compilationId) {
         // Проверка существования подборки перед удалением

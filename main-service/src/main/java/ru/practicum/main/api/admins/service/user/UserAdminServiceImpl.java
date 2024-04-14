@@ -10,6 +10,7 @@ import ru.practicum.main.error.exception.NotFoundException;
 import ru.practicum.main.mapper.UserMapper;
 import ru.practicum.main.model.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +31,7 @@ public class UserAdminServiceImpl implements UserAdminService {
         return UserMapper.MAPPER.toUserDosList(users);
     }
 
+    @Transactional
     @Override
     public UserDto addUser(UserDto request) {
         User user = UserMapper.MAPPER.toUser(request);
@@ -37,6 +39,7 @@ public class UserAdminServiceImpl implements UserAdminService {
         return UserMapper.MAPPER.toUserDto(saveUser);
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long userId) {
         checkUser(userId);

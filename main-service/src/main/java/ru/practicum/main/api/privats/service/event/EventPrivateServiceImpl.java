@@ -23,6 +23,7 @@ import ru.practicum.main.model.Event;
 import ru.practicum.main.model.User;
 import ru.practicum.main.model.state.EventState;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public EventFullDto addEvent(EventNewDto request, Long userId) {
         checkTimeBeforeEventStart(request.getEventDate());

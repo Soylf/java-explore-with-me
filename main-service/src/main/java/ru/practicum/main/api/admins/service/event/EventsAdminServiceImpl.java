@@ -21,6 +21,7 @@ import ru.practicum.main.model.Category;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.state.EventState;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -74,6 +75,7 @@ public class EventsAdminServiceImpl implements EventsAdminService {
         return EventMapper.MAPPER.toEventFullDtoList(events);
     }
 
+    @Transactional
     @Override
     public EventFullDto updateEventById(Long eventId, EventUpdateAdminRequest request) {
         Event foundEvent = getEventByIdIfExist(eventId);
