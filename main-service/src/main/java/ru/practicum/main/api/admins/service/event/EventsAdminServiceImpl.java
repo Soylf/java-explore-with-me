@@ -69,8 +69,9 @@ public class EventsAdminServiceImpl implements EventsAdminService {
                     criteriaBuilder.lessThanOrEqualTo(root.get("eventDate"), endDate));
         }
 
-        Page<Event> events = eventRepository.findAll(specification, pageable);
-        return EventMapper.MAPPER.toEventFullDtoList(events.getContent());
+        Page<Event> eventPage = eventRepository.findAll(specification, pageable);
+        List<Event> events = eventPage.getContent();
+        return EventMapper.MAPPER.toEventFullDtoList(events);
     }
 
     @Override

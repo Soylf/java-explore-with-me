@@ -102,8 +102,9 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         Pageable pageable = PageRequest.of(from / size, size, Sort.by(Sort.Direction.ASC, "id"));
 
         Page<Event> eventPage = eventRepository.findAllByInitiatorId(userId, pageable);
+        List<Event> events = eventPage.getContent();
 
-        return EventMapper.MAPPER.toEventShortDtoList(eventPage.getContent());
+        return EventMapper.MAPPER.toEventShortDtoList(events);
     }
 
     @Override

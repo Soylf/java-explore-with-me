@@ -8,6 +8,7 @@ import ru.practicum.main.api.publics.service.event.EventsPublicService;
 import ru.practicum.main.dto.event.EventFullDto;
 import ru.practicum.main.dto.event.EventShortDto;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
@@ -31,15 +32,17 @@ public class EventPublicController {
                                          @RequestParam(name = "onlyAvailable", required = false) Boolean onlyAvailable,
                                          @RequestParam(name = "sort", defaultValue = "event_date") String sort,
                                          @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
-                                         @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
+                                         @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
+                                         HttpServletRequest request) {
         log.error("EventPublicController: запрос на получение списка событий");
-        return service.getAllEvents(text, categories, paid, startDate,
-                endDate, onlyAvailable, sort, from, size);
+        return service.getAllEvents(text, categories, paid, startDate, endDate, onlyAvailable, sort,
+                from, size, request.getRemoteAddr(), request.getRequestURI());
     }
 
     @GetMapping("/{eventId}")
-    public EventFullDto getEvent(@PathVariable(name = "eventId") @Positive Long eventId) {
+    public EventFullDto getEvent(@PathVariable(name = "eventId") @Positive Long eventId,
+                                 HttpServletRequest request) {
         log.info("EventPublicController: запрос на поулчение события");
-        return service.getEventById(eventId);
+        return service.getEventById(eventId, request.getRemoteAddr(), request.getRequestURI());
     }
 }
