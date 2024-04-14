@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.main.dto.category.CategoryDto;
 import ru.practicum.main.dto.location.LocationDto;
 import ru.practicum.main.dto.user.UserShortDto;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class EventFullDto {
     private Long id;

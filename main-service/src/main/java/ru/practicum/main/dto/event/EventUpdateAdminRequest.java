@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.main.dto.location.LocationDto;
 import ru.practicum.main.model.state.EventStateAction;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class EventUpdateAdminRequest {
     @Size(min = 20, max = 2000, message = "Длина краткого описания должна быть 20 - 2000 символов")
