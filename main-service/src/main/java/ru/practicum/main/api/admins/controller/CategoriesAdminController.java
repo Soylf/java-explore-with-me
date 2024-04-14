@@ -2,6 +2,7 @@ package ru.practicum.main.api.admins.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.api.admins.service.categories.CategoriesAdminService;
 import ru.practicum.main.dto.category.CategoryDto;
@@ -17,12 +18,14 @@ public class CategoriesAdminController {
     private final CategoriesAdminService service;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto addCategories(@RequestBody @Valid CategoryDto categoryDto) {
         log.info("CategoriesAdminController: запрос на создания категории (CategoryDto)");
         return service.addCategories(categoryDto);
     }
 
     @DeleteMapping("/{catId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable(name = "catId") @Positive Long categoryId) {
         log.info("CategoriesAdminController: запрос на удалении категории (CategoryDto)");
         service.deleteCategories(categoryId);

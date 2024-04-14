@@ -2,6 +2,7 @@ package ru.practicum.main.api.admins.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.api.admins.service.user.UserAdminService;
 import ru.practicum.main.dto.user.UserDto;
@@ -19,6 +20,7 @@ public class UserAdminController {
     private final UserAdminService service;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserDto addUser(@RequestBody @Valid UserDto request) {
         log.info("UserAdminController: запрос на создания пользователя");
         return service.addUser(request);
@@ -33,6 +35,7 @@ public class UserAdminController {
     }
 
     @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable(name = "userId") Long userId) {
         log.info("UserAdminController: запрос на удаление пользователя");
         service.deleteUser(userId);

@@ -2,6 +2,7 @@ package ru.practicum.main.api.privats.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.api.privats.service.event.EventPrivateService;
 import ru.practicum.main.api.privats.service.request.RequestPrivateService;
@@ -22,6 +23,7 @@ public class EventPrivateController {
     private final RequestPrivateService requestService;
 
     @PostMapping("/{userId}/events")
+    @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto addEvent(@PathVariable(name = "userId") @Positive Long userId,
                                  @RequestBody @Valid EventNewDto request) {
         log.info("EventPrivateController: запрос на создания EventFullDto");
@@ -37,6 +39,7 @@ public class EventPrivateController {
     }
 
     @PatchMapping("/{userId}/events/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult updateStatusRequest(@PathVariable(name = "userId") @Positive Long userId,
                                                               @PathVariable(name = "eventId") @Positive Long eventId,
                                                               @RequestBody EventRequestStatusUpdateRequest request) {
@@ -60,6 +63,7 @@ public class EventPrivateController {
     }
 
     @GetMapping("/{userId}/events/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
     public List<RequestDto> getRequestByEvent(@PathVariable(name = "userId") Long userId,
                                               @PathVariable(name = "eventId") Long eventId) {
         log.info("EventPrivateController: запрос на получения списка RequestDto по такому Эпоинту: (\"/{userId}/events/{eventId}/requests\")");
