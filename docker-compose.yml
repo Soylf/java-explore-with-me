@@ -35,7 +35,7 @@ services:
     depends_on:
       - ewm-db
     ports:
-      - "9091:8080"
+      - "8080:8080"
     environment:
       - EWM_DRIVER=org.postgresql.Driver
       - EWM_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm-main
