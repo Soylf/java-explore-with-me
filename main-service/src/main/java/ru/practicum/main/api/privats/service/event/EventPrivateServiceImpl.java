@@ -15,6 +15,7 @@ import ru.practicum.main.dto.event.EventNewDto;
 import ru.practicum.main.dto.event.EventShortDto;
 import ru.practicum.main.dto.event.EventUpdateUserRequest;
 import ru.practicum.main.error.exception.BadRequestException;
+import ru.practicum.main.error.exception.ConflictException;
 import ru.practicum.main.error.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.mapper.LocationMapper;
@@ -26,6 +27,7 @@ import ru.practicum.main.model.state.EventState;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -51,11 +53,19 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     @Override
     public EventFullDto updateEventByOwner(Long userId, Long eventId, EventUpdateUserRequest request) {
-        checkTimeBeforeEventStart(request.getEventDate());
-        checkEvent(eventId);
         checkUser(userId);
 
         Event updateEvent = getEvent(eventId, userId);
+
+        if (!Objects.equals(userId, updateEvent.getInitiator().getId())) {
+            throw new ConflictException(String.format("Пользователь с id='%s' не автор события с id='%s'",
+                    userId, eventId));
+        }
+
+        if (Objects.equals(EventState.PUBLISHED, updateEvent.getState())) {
+            throw new ConflictException("Статус события - 'PUBLISHED'. " +
+                    "Статус события должен быть 'PENDING' or 'CANCELED'");
+        }
 
         // Обновление информации о событии
         if (request.getTitle() != null && !request.getTitle().isBlank()) {

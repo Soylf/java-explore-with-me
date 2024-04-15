@@ -11,6 +11,7 @@ import ru.practicum.main.error.exception.NotFoundException;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.Compilation;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ import java.util.List;
 public class CompilationPublicServiceImpl implements CompilationPublicService {
     private final CompilationRepository repository;
 
+    @Transactional
     @Override
     public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);

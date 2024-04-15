@@ -31,7 +31,7 @@ public class CategoriesAdminController {
         service.deleteCategories(categoryId);
     }
 
-    @PostMapping("/{catId}")
+    @PatchMapping("/{catId}")
     public CategoryDto updateCategory(@PathVariable(name = "catId") @Positive Long categoryId,
                                       @RequestBody @Valid CategoryDto request) {
         log.info("CategoriesAdminController: запрос на обновления категории (CategoryDto)");
