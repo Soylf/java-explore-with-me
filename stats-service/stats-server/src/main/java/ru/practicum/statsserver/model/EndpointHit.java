@@ -17,12 +17,9 @@ public class EndpointHit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "app")
-    @NonNull
     private String app;
-    @NonNull
     @Column(name = "uri")
     private String uri;
-    @NonNull
     @Column(name = "ip")
     private String ip;
     @Column(name = "timestamp")
