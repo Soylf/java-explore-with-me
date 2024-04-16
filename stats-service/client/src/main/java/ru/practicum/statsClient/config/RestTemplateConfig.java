@@ -14,6 +14,6 @@ public class RestTemplateConfig {
     }
     @Bean
     public String stringBean() {
-        return new String();
+        return "";
     }
 }
