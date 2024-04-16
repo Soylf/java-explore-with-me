@@ -19,7 +19,6 @@ import ru.practicum.statsClient.client.StatClient;
 import ru.practicum.statsdto.EndpointHitDto;
 import ru.practicum.statsdto.StatDto;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class EventsPublicServiceImpl implements EventsPublicService {
-    private final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final StatClient statClient;
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
@@ -124,7 +123,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                 .app("ewm-main-service")
                 .uri(uri)
                 .ip(ip)
-                .timestamp(LocalDateTime.now().format(DATE_TIME_FORMATTER))
+                .timestamp(LocalDateTime.now().format(DATE_TIME_FORMAT))
                 .build());
     }
 
@@ -153,8 +152,8 @@ public class EventsPublicServiceImpl implements EventsPublicService {
 
     private List<StatDto> getViewsStatistics(List<String> uris) {
         return statClient.getStatistics(
-                LocalDateTime.now().minusYears(100).format(DATE_TIME_FORMATTER),
-                LocalDateTime.now().plusYears(5).format(DATE_TIME_FORMATTER),
+                LocalDateTime.now().minusYears(100).format(DATE_TIME_FORMAT),
+                LocalDateTime.now().plusYears(5).format(DATE_TIME_FORMAT),
                 uris,
                 true);
     }
