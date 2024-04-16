@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class EventsPublicServiceImpl implements EventsPublicService {
-    private final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final StatClient statClient;
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
@@ -123,7 +123,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                 .app("ewm-main-service")
                 .uri(uri)
                 .ip(ip)
-                .timestamp(LocalDateTime.now().format(DATE_TIME_FORMAT))
+                .timestamp(LocalDateTime.now().format(dateTimeFormatter))
                 .build());
     }
 
@@ -152,8 +152,8 @@ public class EventsPublicServiceImpl implements EventsPublicService {
 
     private List<StatDto> getViewsStatistics(List<String> uris) {
         return statClient.getStatistics(
-                LocalDateTime.now().minusYears(100).format(DATE_TIME_FORMAT),
-                LocalDateTime.now().plusYears(5).format(DATE_TIME_FORMAT),
+                LocalDateTime.now().minusYears(100).format(dateTimeFormatter),
+                LocalDateTime.now().plusYears(5).format(dateTimeFormatter),
                 uris,
                 true);
     }
