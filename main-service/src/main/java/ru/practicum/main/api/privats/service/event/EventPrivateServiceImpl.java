@@ -68,32 +68,32 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         }
 
         // Обновление информации о событии
-        if (request.getTitle() != null && !request.getTitle().isBlank()) {
+        if (Objects.nonNull(request.getTitle())) {
             updateEvent.setTitle(request.getTitle());
         }
-        if (request.getEventDate() != null) {
+        if (Objects.nonNull(request.getEventDate())) {
             updateEvent.setEventDate(request.getEventDate());
         }
-        if (StringUtils.hasLength(request.getAnnotation())) {
+        if (Objects.nonNull(request.getAnnotation()) && StringUtils.hasLength(request.getAnnotation())) {
             updateEvent.setAnnotation(request.getAnnotation());
         }
-        if (request.getCategory() != null) {
+        if (Objects.nonNull(request.getCategory())) {
             Category category = getCategory(request.getCategory());
             updateEvent.setCategory(category);
         }
-        if (request.getDescription() != null) {
+        if (Objects.nonNull(request.getDescription())) {
             updateEvent.setDescription(request.getDescription());
         }
-        if (request.getLocation() != null) {
+        if (Objects.nonNull(request.getLocation())) {
             updateEvent.setLocation(LocationMapper.MAPPER.toLocation(request.getLocation()));
         }
-        if (request.getParticipantLimit() != null) {
+        if (Objects.nonNull(request.getParticipantLimit())) {
             updateEvent.setParticipantLimit(request.getParticipantLimit());
         }
-        if (request.getRequestModeration() != null) {
+        if (Objects.nonNull(request.getRequestModeration())) {
             updateEvent.setRequestModeration(request.getRequestModeration());
         }
-        if (request.getStateAction() != null) {
+        if (Objects.nonNull(request.getStateAction())) {
             switch (request.getStateAction()) {
                 case SEND_TO_REVIEW:
                     updateEvent.setState(EventState.PENDING);

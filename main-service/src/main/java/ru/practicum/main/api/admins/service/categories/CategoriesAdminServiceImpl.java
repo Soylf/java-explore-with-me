@@ -24,28 +24,22 @@ public class CategoriesAdminServiceImpl implements CategoriesAdminService {
     @Override
     public void deleteCategories(Long catId) {
         // Проверка существования категории перед удалением
-        checkCategory(catId);
-        repository.deleteById(catId);
+        Category category = getCategory(catId);
+        repository.delete(category);
     }
 
     @Transactional
     @Override
     public CategoryDto updateCategories(CategoryDto categoryDto, Long catId) {
             // Получение категории по ID
-            Category newCategory = getCategory(catId);
-            // Обновление имени категории, если новое имя не пустое
-            if (categoryDto.getName() != null && !categoryDto.getName().isBlank()) {
-                newCategory.setName(categoryDto.getName());
-            }
-            return CategoryMapper.MAPPER.toDto(newCategory);
+            Category category = getCategory(catId);
+            // Обновление имени категории
+            category.setName(categoryDto.getName());
+
+            return CategoryMapper.MAPPER.toDto(category);
     }
 
     //Дополнительыне методы
-    private void checkCategory(Long catId) {
-        repository.findById(catId)
-                .orElseThrow(() -> new NotFoundException(String.format("Что-то пошло не так с id: '%s' не найдена", catId)));
-    }
-
     private Category getCategory(Long catId) {
         return repository.findById(catId)
                 .orElseThrow(() -> new NotFoundException(String.format("Что-то пошло не так с id: '%s' не найдена", catId)));

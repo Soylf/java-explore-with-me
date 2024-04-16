@@ -72,7 +72,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                     criteriaBuilder.lessThan(root.get("eventDate"), endDate));
         }
         // Фильтрация по доступности
-        if (onlyAvailable) {
+        if (Objects.nonNull(onlyAvailable) && onlyAvailable) {
             specification = specification.and((root, query, criteriaBuilder) ->
                     criteriaBuilder.greaterThanOrEqualTo(root.get("participantLimit"), 0));
         }
