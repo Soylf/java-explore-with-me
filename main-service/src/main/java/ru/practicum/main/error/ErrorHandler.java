@@ -1,7 +1,7 @@
 package ru.practicum.main.error;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,7 +11,6 @@ import ru.practicum.main.error.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 
-@Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
     @ExceptionHandler(ConflictException.class)
@@ -45,5 +44,16 @@ public class ErrorHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler({PSQLException.class})
+    public ResponseEntity<ApiError> handle(final PSQLException psqlException) {
+        ApiError apiError = ApiError.builder()
+                .status(String.valueOf(HttpStatus.CONFLICT))
+                .reason("Duplicate value in database")
+                .message(psqlException.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 }
