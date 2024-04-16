@@ -1,4 +1,4 @@
-package ru.practicum.stats.config;
+package ru.practicum.statsClient.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,5 +11,9 @@ public class RestTemplateConfig {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
+    }
+    @Bean
+    public String stringBean() {
+        return new String();
     }
 }

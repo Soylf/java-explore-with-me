@@ -14,6 +14,7 @@ import ru.practicum.main.model.Event;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -28,7 +29,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         Compilation compilation = CompilationMapper.MAPPER.fromNewDto(request);
 
         // Установка значения поля 'pinned' в false, если оно не указано в запросе
-        if (request.getPinned() != null) {
+        if (!Objects.nonNull(request.getPinned())) {
             compilation.setPinned(false);
         }
         // Установка событий для подборки, если они указаны в запросе
