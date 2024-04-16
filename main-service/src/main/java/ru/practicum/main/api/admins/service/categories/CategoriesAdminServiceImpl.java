@@ -36,7 +36,7 @@ public class CategoriesAdminServiceImpl implements CategoriesAdminService {
             // Обновление имени категории
             category.setName(categoryDto.getName());
 
-            return CategoryMapper.MAPPER.toDto(category);
+            return CategoryMapper.MAPPER.toDto(repository.save(category));
     }
 
     //Дополнительыне методы

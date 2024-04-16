@@ -69,6 +69,4 @@ public class EventPrivateController {
         log.info("EventPrivateController: запрос на получения списка RequestDto по такому Эпоинту: (\"/{userId}/events/{eventId}/requests\")");
         return requestService.getRequestByEvent(userId, eventId);
     }
-
-
 }

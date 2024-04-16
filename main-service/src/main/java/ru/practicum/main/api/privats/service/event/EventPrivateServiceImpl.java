@@ -72,6 +72,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             updateEvent.setTitle(request.getTitle());
         }
         if (Objects.nonNull(request.getEventDate())) {
+            checkTimeBeforeEventStart(request.getEventDate());
             updateEvent.setEventDate(request.getEventDate());
         }
         if (Objects.nonNull(request.getAnnotation()) && StringUtils.hasLength(request.getAnnotation())) {
