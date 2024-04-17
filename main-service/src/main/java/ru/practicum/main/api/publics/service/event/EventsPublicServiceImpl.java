@@ -38,15 +38,15 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                                             LocalDateTime startDate, LocalDateTime endDate,
                                             Boolean onlyAvailable, String sort,
                                             Integer from, Integer size, String ip, String uri) {
+        saveInfoToStatistics(ip, uri);
         checkTime(startDate, endDate);
         checkCategory(categories);
-        saveInfoToStatistics(ip, uri);
 
         Pageable pageable = PageRequest.of(from / size, size);
         Specification<Event> specification = Specification.where(null);
 
         // Фильтрация по тексту в аннотации или описании
-        if (text != null) {
+        if (Objects.nonNull(text)) {
             specification = specification.and((root, query, criteriaBuilder) -> criteriaBuilder.or(
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("annotation")),
                             "%" + text.toLowerCase() + "%"),
@@ -67,7 +67,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
                 criteriaBuilder.greaterThan(root.get("eventDate"), startDateTime));
 
         // Фильтрация по дате окончания события
-        if (endDate != null) {
+        if (Objects.nonNull(endDate)) {
             specification = specification.and((root, query, criteriaBuilder) ->
                     criteriaBuilder.lessThan(root.get("eventDate"), endDate));
         }
