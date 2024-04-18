@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.api.repository.CategoryRepository;
 import ru.practicum.main.dto.category.CategoryDto;
 import ru.practicum.main.error.exception.NotFoundException;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoriesPublicServiceImpl implements CategoriesPublicService {
     private final CategoryRepository repository;
 

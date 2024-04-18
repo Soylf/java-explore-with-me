@@ -2,6 +2,7 @@ package ru.practicum.main.api.privats.service.request;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.api.repository.EventRepository;
 import ru.practicum.main.api.repository.RequestRepository;
 import ru.practicum.main.api.repository.UserRepository;
@@ -18,7 +19,6 @@ import ru.practicum.main.model.User;
 import ru.practicum.main.model.state.EventState;
 import ru.practicum.main.model.state.RequestStatus;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RequestPrivateServiceImpl implements RequestPrivateService {
 
     private final RequestRepository requestRepository;
@@ -34,6 +35,7 @@ public class RequestPrivateServiceImpl implements RequestPrivateService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public EventRequestStatusUpdateResult updateStatusRequest(Long userId, Long eventId, EventRequestStatusUpdateRequest request) {
         checkUser(userId);
         Event event = getEventAndInitiatorId(eventId, userId);
@@ -154,6 +156,7 @@ public class RequestPrivateServiceImpl implements RequestPrivateService {
     }
 
     @Override
+    @Transactional
     public RequestDto updateRequest(Long userId, Long requestId) {
         checkUser(userId);
         checkRequest(requestId);

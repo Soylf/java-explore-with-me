@@ -2,6 +2,7 @@ package ru.practicum.statsserver.server;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.statsserver.error.exception.NoValidParameter;
 import ru.practicum.statsserver.mapper.HitMapper;
 import ru.practicum.statsserver.model.EndpointHit;
@@ -14,11 +15,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class EndpointHitServiceImpl implements EndpointHitService {
     private final EndpointHitRepository repository;
     private final HitMapper mapper;
 
     @Override
+    @Transactional
     public void addEndpointHit(EndpointHitDto endpointHitDto) {
         EndpointHit hit = mapper.fromEndpointHit(endpointHitDto);
         repository.save(hit); // Сохранение данных о запросе после их преобразования

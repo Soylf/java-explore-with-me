@@ -2,6 +2,7 @@ package ru.practicum.main.api.admins.service.compilation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.api.repository.CompilationRepository;
 import ru.practicum.main.api.repository.EventRepository;
 import ru.practicum.main.dto.compilation.CompilationDto;
@@ -12,19 +13,20 @@ import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.Compilation;
 import ru.practicum.main.model.Event;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CompilationAdminServiceImpl implements CompilationAdminService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
 
-    @Transactional
     @Override
+    @Transactional
     public CompilationDto createCompilation(CompilationNewDto request) {
         Compilation compilation = CompilationMapper.MAPPER.fromNewDto(request);
 
@@ -41,8 +43,8 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public CompilationDto updateCompilationById(Long compilationId, CompilationUpdateRequest request) {
         Compilation compilation = getCompilation(compilationId);
 
@@ -63,15 +65,15 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         return CompilationMapper.MAPPER.toDto(newCompilation);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void deleteCompilationById(Long compilationId) {
         // Проверка существования подборки перед удалением
         checkCompilation(compilationId);
         compilationRepository.deleteById(compilationId);
     }
 
-    //Дополнительыне методы
+    //Дополнительные методы
     private List<Event> getEvents(Set<Long> events) {
         return eventRepository.findAllByIdIn(events);
     }

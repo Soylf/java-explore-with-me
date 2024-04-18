@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import ru.practicum.main.api.repository.CategoryRepository;
 import ru.practicum.main.api.repository.EventRepository;
@@ -24,13 +25,13 @@ import ru.practicum.main.model.Event;
 import ru.practicum.main.model.User;
 import ru.practicum.main.model.state.EventState;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class EventPrivateServiceImpl implements EventPrivateService {
 
     // Константа, определяющая количество часов до начала события
@@ -52,6 +53,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional
     public EventFullDto updateEventByOwner(Long userId, Long eventId, EventUpdateUserRequest request) {
         checkUser(userId);
 
