@@ -22,7 +22,7 @@ public class CommentAdminController {
     }
 
     @GetMapping("/{commentId}")
-    public CommentDto getCommentById (@PathVariable Long commentId) {
+    public CommentDto getCommentById(@PathVariable Long commentId) {
         log.info("CommentAdminController: запрос на получение отдельного комита: '{}'", commentId);
         return service.getCommentById(commentId);
     }

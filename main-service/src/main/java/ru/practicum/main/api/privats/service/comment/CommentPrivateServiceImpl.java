@@ -107,13 +107,15 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     private Comment getCommentById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(()->
+        return commentRepository.findById(commentId).orElseThrow(() ->
                 new NotFoundException(String.format("Комментарий с id='%s' не найден", commentId)));
     }
+
     private User getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException(String.format("пользовтаель с id='%s' не найден", userId)));
     }
+
     private Event getEventById(Long eventId) {
         return eventRepository.findById(eventId).orElseThrow(() ->
                 new NotFoundException(String.format("событие с id='%s' не найден", eventId)));
