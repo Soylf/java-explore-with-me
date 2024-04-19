@@ -5,6 +5,7 @@ import org.postgresql.util.PSQLException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.practicum.main.error.exception.AccessException;
 import ru.practicum.main.error.exception.BadRequestException;
 import ru.practicum.main.error.exception.ConflictException;
 import ru.practicum.main.error.exception.NotFoundException;
@@ -55,5 +56,16 @@ public class ErrorHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AccessException.class)
+    public ResponseEntity<ApiError> handle(final AccessException e) {
+        ApiError response = ApiError.builder()
+                .status(String.valueOf(HttpStatus.FORBIDDEN))
+                .reason("The action is not available")
+                .message(e.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 }

@@ -7,8 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.main.api.publics.service.comment.CommentPublicService;
 import ru.practicum.main.api.repository.CategoryRepository;
 import ru.practicum.main.api.repository.EventRepository;
+import ru.practicum.main.dto.comment.CommentDto;
 import ru.practicum.main.dto.event.EventFullDto;
 import ru.practicum.main.dto.event.EventShortDto;
 import ru.practicum.main.error.exception.BadRequestException;
@@ -34,6 +36,7 @@ public class EventsPublicServiceImpl implements EventsPublicService {
     private final StatClient statClient;
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentPublicService commentPublicService;
 
     @Override
     public List<EventShortDto> getAllEvents(String text, List<Long> categories, Boolean paid,
@@ -97,11 +100,14 @@ public class EventsPublicServiceImpl implements EventsPublicService {
         Event event = eventRepository.findByIdAndState(eventId, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException("Event not found"));
 
+        List<CommentDto> comments = commentPublicService.getAllCommentsByEventId(eventId, 0, 10);
         saveInfoToStatistics(ip, uri);
         updateViewsOfEvents(List.of(event));
 
-        // Возврат полной информации о событии в виде DTO
-        return EventMapper.MAPPER.toEventFullDto(event);
+        EventFullDto eventDto = EventMapper.MAPPER.toEventFullDto(event);
+        eventDto.setComments(comments);
+
+        return eventDto;
     }
 
     // Дополнительные методы

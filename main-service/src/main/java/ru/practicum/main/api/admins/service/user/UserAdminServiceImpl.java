@@ -49,7 +49,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     }
 
     //Дополнительные методы
-    public void checkUser(Long userId) {
+    private void checkUser(Long userId) {
         repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id= '%s' не найден", userId)));
     }
