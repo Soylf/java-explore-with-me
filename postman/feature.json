@@ -347,8 +347,8 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Response status must be 403\", function () {\r",
-              "    pm.response.to.have.status(403);   \r",
+              "pm.test(\"Response status must be 404\", function () {\r",
+              "    pm.response.to.have.status(404);   \r",
               "});\r",
               "\r",
               "pm.test(\"Response must contains body in json format\", function () {   \r",
@@ -356,7 +356,8 @@
               "    pm.response.to.be.json;\r",
               "});"
             ],
-            "type": "text/javascript"
+            "type": "text/javascript",
+            "packages": {}
           }
         },
         {
@@ -365,7 +366,8 @@
             "exec": [
               ""
             ],
-            "type": "text/javascript"
+            "type": "text/javascript",
+            "packages": {}
           }
         }
       ],
