@@ -31,17 +31,6 @@ public class ErrorHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ApiError> handleGenericException(Throwable ex) {
-        ApiError response = ApiError.builder()
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
-                .reason("Internal Server Error")
-                .message(ex.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiError> handleBadRequestException(BadRequestException ex) {
         ApiError response = ApiError.builder()
