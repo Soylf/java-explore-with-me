@@ -1,16 +1,15 @@
 package ru.practicum.main.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.main.model.state.RequestStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
